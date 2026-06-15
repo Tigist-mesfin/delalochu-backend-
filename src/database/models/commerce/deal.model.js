@@ -1,50 +1,34 @@
-// src/database/models/commerce/deal.model.js
-
-"use strict";
-
 module.exports = (sequelize, DataTypes) => {
-  const Deal = sequelize.define(
-    "Deal",
-    {
-      id: {
-        type: DataTypes.BIGINT.UNSIGNED,
-        primaryKey: true,
-        autoIncrement: true,
-      },
+  const Deal = sequelize.define("Deal", {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 
-      title: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
+    listing_id: DataTypes.INTEGER,
+    seeker_id: DataTypes.INTEGER,
 
-      amount: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-      },
+    final_deal_value: DataTypes.DECIMAL,
 
-      status: {
-        type: DataTypes.ENUM("pending", "active", "closed"),
-        defaultValue: "pending",
-      },
+    status: DataTypes.STRING,
+  });
 
-      userId: {
-        type: DataTypes.BIGINT.UNSIGNED,
-        allowNull: false,
-      },
-    },
-    {
-      tableName: "deals",
-      timestamps: true,
-    },
-  );
-
-  // =====================
-  // ASSOCIATIONS
-  // =====================
   Deal.associate = (models) => {
+    Deal.belongsTo(models.Listing, {
+      foreignKey: "listing_id",
+    });
+
     Deal.belongsTo(models.User, {
-      foreignKey: "userId",
-      as: "user",
+      foreignKey: "seeker_id",
+    });
+
+    Deal.hasMany(models.DealAuditTrail, {
+      foreignKey: "deal_id",
+    });
+
+    Deal.hasMany(models.CommissionHistory, {
+      foreignKey: "deal_id",
+    });
+
+    Deal.hasOne(models.DealFinancialSnapshot, {
+      foreignKey: "deal_id",
     });
   };
 
