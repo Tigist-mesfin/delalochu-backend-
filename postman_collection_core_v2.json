@@ -1,0 +1,166 @@
+{
+  "info": {
+    "name": "delalochu APIs (validation-exact)",
+    "_postman_id": "",
+    "description": "Postman collection for core module endpoints — request bodies use exact Joi validation fields",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "jwtToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"User\",\n  \"phone\": \"+251912345678\",\n  \"password\": \"password123\",\n  \"role\": \"CLIENT\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/users/register" }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+251912345678\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/users/login" }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/users" }
+          }
+        },
+        {
+          "name": "Get User By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/users/:id" }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Updated\",\n  \"last_name\": \"Name\",\n  \"phone\": \"+251911111111\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/users/:id" }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "url": { "raw": "{{baseUrl}}/api/users/:id" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Staff",
+      "item": [
+        {
+          "name": "Create Staff",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"user_id\": 123,\n  \"role_id\": 2\n}" },
+            "url": { "raw": "{{baseUrl}}/api/staff" }
+          }
+        },
+        { "name": "Get All Staff", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff" } } },
+        { "name": "Get Staff By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff/:id" } } },
+        { "name": "Update Staff", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"role_id\": 3\n}" }, "url": { "raw": "{{baseUrl}}/api/staff/:id" } } },
+        { "name": "Delete Staff", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff/:id" } } }
+      ]
+    },
+    {
+      "name": "Staff Roles",
+      "item": [
+        { "name": "Create Role", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"rolename\": \"Manager\"\n}" }, "url": { "raw": "{{baseUrl}}/api/staff-roles" } } },
+        { "name": "Get All Roles", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-roles" } } },
+        { "name": "Get Role By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-roles/:id" } } },
+        { "name": "Update Role", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"rolename\": \"Updated Role\"\n}" }, "url": { "raw": "{{baseUrl}}/api/staff-roles/:id" } } },
+        { "name": "Delete Role", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-roles/:id" } } }
+      ]
+    },
+    {
+      "name": "Staff Permissions",
+      "item": [
+        { "name": "Create Permission", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"staff_role_id\": 2,\n  \"module\": \"USERS\",\n  \"can_create\": true,\n  \"can_read\": true,\n  \"can_update\": false,\n  \"can_delete\": false,\n  \"granted_by_staff_id\": 5,\n  \"granted_at\": \"2026-06-15T00:00:00.000Z\",\n  \"note\": \"Initial grant\"\n}" }, "url": { "raw": "{{baseUrl}}/api/staff-permissions" } } },
+        { "name": "Get All Permissions", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-permissions" } } },
+        { "name": "Get Permission By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-permissions/:id" } } },
+        { "name": "Update Permission", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"can_create\": false,\n  \"can_update\": true\n}" }, "url": { "raw": "{{baseUrl}}/api/staff-permissions/:id" } } },
+        { "name": "Delete Permission", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/staff-permissions/:id" } } }
+      ]
+    },
+    {
+      "name": "Clients",
+      "item": [
+        { "name": "Create Client", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"user_id\": 200,\n  \"registered_by_staff_id\": null,\n  \"referred_by_broker_id\": null,\n  \"registration_type\": \"APP\",\n  \"client_category\": \"BUYER\",\n  \"requested_service\": \"PROPERTY_SEARCH\"\n}" }, "url": { "raw": "{{baseUrl}}/api/clients" } } },
+        { "name": "Get All Clients", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/clients" } } },
+        { "name": "Get Client By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/clients/:id" } } },
+        { "name": "Update Client", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"client_category\": \"SELLER\"\n}" }, "url": { "raw": "{{baseUrl}}/api/clients/:id" } } },
+        { "name": "Delete Client", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/clients/:id" } } }
+      ]
+    },
+    {
+      "name": "Brokers",
+      "item": [
+        { "name": "Create Broker", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"user_id\": 300,\n  \"verification_status\": \"PENDING\",\n  \"experience\": 5,\n  \"region\": \"Addis Ababa\",\n  \"city\": \"Addis Ababa\",\n  \"woreda\": \"01\",\n  \"specific_area\": \"Bole\",\n  \"doc\": \"\",\n  \"total_deals_closed\": 0,\n  \"rating\": 0,\n  \"broker_status\": \"ACTIVE\",\n  \"wallet_balance\": 0\n}" }, "url": { "raw": "{{baseUrl}}/api/brokers" } } },
+        { "name": "Get All Brokers", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/brokers" } } },
+        { "name": "Get Broker By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/brokers/:id" } } },
+        { "name": "Update Broker", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"rating\": 4\n}" }, "url": { "raw": "{{baseUrl}}/api/brokers/:id" } } },
+        { "name": "Delete Broker", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/brokers/:id" } } }
+      ]
+    },
+    {
+      "name": "Broker Reviews",
+      "item": [
+        { "name": "Create Review", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"broker_id\": 300,\n  \"commentor_user_id\": 200,\n  \"interaction_type\": \"LIKE\",\n  \"comment\": \"Great service\",\n  \"date\": \"2026-06-15T00:00:00.000Z\"\n}" }, "url": { "raw": "{{baseUrl}}/api/broker-reviews" } } },
+        { "name": "Get All Reviews", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/broker-reviews" } } },
+        { "name": "Get Review By ID", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/broker-reviews/:id" } } },
+        { "name": "Update Review", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "body": { "mode": "raw", "raw": "{\n  \"interaction_type\": \"DISLIKE\"\n}" }, "url": { "raw": "{{baseUrl}}/api/broker-reviews/:id" } } },
+        { "name": "Delete Review", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{jwtToken}}" } ], "url": { "raw": "{{baseUrl}}/api/broker-reviews/:id" } } }
+      ]
+    }
+  ]
+}

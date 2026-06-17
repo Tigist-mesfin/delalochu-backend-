@@ -1,16 +1,91 @@
-// src/modules/core/user/user.controller.js
-const catchAsync = require("../../../shared/helpers/catchAsync.helper");
-const { sendSuccess } = require("../../../shared/helpers/response.helper");
 const userService = require("./user.service");
+const { registerUser, loginUser,  verifyOtpSchema, resendOtpSchema, } = require("./user.validation");
 
-const createUser = catchAsync(async (req, res) => {
-  const user = await userService.createUser(req.body);
-  sendSuccess(res, { data: user, message: "User created", statusCode: 201 });
-});
+class UserController {
+  async register(req, res) {
+    try {
+      const { error } = registerUser.validate(req.body);
+      if (error) return res.status(400).json({ message: error.message });
 
-const getUser = catchAsync(async (req, res) => {
-  const user = await userService.getUserById(req.params.id);
-  sendSuccess(res, { data: user, message: "User fetched" });
-});
+      const user = await userService.register(req.body);
 
-module.exports = { createUser, getUser };
+      res.status(201).json(user);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+   async verifyPhone(req, res) {
+    try {
+      const { error } = verifyOtpSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.message });
+      }
+
+      const { phone, otp } = req.body;
+
+      const result = await userService.verifyPhone(phone, otp);
+
+      return res.json(result);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  }
+
+  async resendOtp(req, res) {
+    try {
+      const { error } = resendOtpSchema.validate(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.message });
+      }
+
+      const { phone } = req.body;
+
+      const result = await userService.resendOtp(phone);
+
+      return res.json(result);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
+  }
+
+
+  async login(req, res) {
+    try {
+      const { error } = loginUser.validate(req.body);
+      if (error) return res.status(400).json({ message: error.message });
+
+      const { phone, password } = req.body;
+
+      const result = await userService.login(phone, password);
+
+      res.json(result);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+  
+
+  async getAll(req, res) {
+    const users = await userService.getAll();
+    res.json(users);
+  }
+
+  async getById(req, res) {
+    const user = await userService.getById(req.params.id);
+    res.json(user);
+  }
+
+  async update(req, res) {
+    await userService.update(req.params.id, req.body);
+    res.json({ message: "Updated successfully" });
+  }
+
+  async delete(req, res) {
+    await userService.delete(req.params.id);
+    res.json({ message: "Deleted successfully" });
+  }
+}
+
+module.exports = new UserController();

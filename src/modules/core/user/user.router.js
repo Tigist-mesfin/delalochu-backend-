@@ -1,12 +1,17 @@
-// src/modules/core/user/user.router.js
-const router = require('express').Router();
-const controller = require('./user.controller');
-const { validateBody, validateParams } = require('../../../shared/middlewares/validate.wrapper');
-const schemas = require('./user.validation');
-const auth = require('../../../shared/middlewares/auth.middleware');   // optional
+const express = require("express");
+const router = express.Router();
+const controller = require("./user.controller");
 
-router.post('/', auth, validateBody(schemas.createUser), controller.createUser);
-router.get('/:id', validateParams(schemas.userId), controller.getUser);
-router.put('/:id', auth, validateParams(schemas.userId), validateBody(schemas.updateUser), controller.updateUser);
+// AUTH
+router.post("/register", controller.register);
+router.post("/verify-phone", controller.verifyPhone);
+router.post("/resend-otp", controller.resendOtp);
+router.post("/login", controller.login);
+
+// CRUD
+router.get("/", controller.getAll);
+router.get("/:id", controller.getById);
+router.put("/:id", controller.update);
+router.delete("/:id", controller.delete);
 
 module.exports = router;

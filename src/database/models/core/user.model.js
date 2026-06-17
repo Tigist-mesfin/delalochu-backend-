@@ -1,19 +1,53 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {
-    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
 
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-    phone: { type: DataTypes.STRING, unique: true },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-    password_hash: DataTypes.STRING,
-    profile_image: DataTypes.STRING,
-    bio: DataTypes.TEXT,
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
 
-    role: DataTypes.ENUM("CLIENT", "BROKER", "STAFF", "ADMIN"),
+    password_hash: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
 
-    status: DataTypes.ENUM("ACTIVE", "PENDING", "SUSPENDED"),
+    // Optional
+    profile_image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    // Optional
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+
+    role: {
+      type: DataTypes.ENUM("CLIENT", "BROKER", "STAFF", "ADMIN"),
+      allowNull: false,
+    },
+
+    status: {
+      type: DataTypes.ENUM("ACTIVE", "PENDING", "SUSPENDED"),
+      allowNull: false,
+    },
   });
 
   User.associate = (models) => {

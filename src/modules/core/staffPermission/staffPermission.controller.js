@@ -1,14 +1,13 @@
-const service = require("./client.service");
-
+const service = require("./staffPermission.service");
 const {
-  createClient,
-  updateClient,
-} = require("./client.validation");
+  createPermission,
+  updatePermission,
+} = require("./staffPermission.validation");
 
-class ClientController {
+class StaffPermissionController {
   async create(req, res, next) {
     try {
-      const { error } = createClient.validate(req.body);
+      const { error } = createPermission.validate(req.body);
 
       if (error) {
         return res.status(400).json({
@@ -16,9 +15,9 @@ class ClientController {
         });
       }
 
-      const client = await service.create(req.body);
+      const permission = await service.create(req.body);
 
-      res.status(201).json(client);
+      res.status(201).json(permission);
     } catch (err) {
       next(err);
     }
@@ -26,9 +25,9 @@ class ClientController {
 
   async getAll(req, res, next) {
     try {
-      const clients = await service.getAll();
+      const permissions = await service.getAll();
 
-      res.json(clients);
+      res.json(permissions);
     } catch (err) {
       next(err);
     }
@@ -36,15 +35,15 @@ class ClientController {
 
   async getById(req, res, next) {
     try {
-      const client = await service.getById(req.params.id);
+      const permission = await service.getById(req.params.id);
 
-      if (!client) {
+      if (!permission) {
         return res.status(404).json({
-          message: "Client not found",
+          message: "Permission not found",
         });
       }
 
-      res.json(client);
+      res.json(permission);
     } catch (err) {
       next(err);
     }
@@ -52,7 +51,7 @@ class ClientController {
 
   async update(req, res, next) {
     try {
-      const { error } = updateClient.validate(req.body);
+      const { error } = updatePermission.validate(req.body);
 
       if (error) {
         return res.status(400).json({
@@ -60,12 +59,9 @@ class ClientController {
         });
       }
 
-      const client = await service.update(
-        req.params.id,
-        req.body
-      );
+      const permission = await service.update(req.params.id, req.body);
 
-      res.json(client);
+      res.json(permission);
     } catch (err) {
       next(err);
     }
@@ -76,7 +72,7 @@ class ClientController {
       await service.delete(req.params.id);
 
       res.json({
-        message: "Client deleted successfully",
+        message: "Permission deleted successfully",
       });
     } catch (err) {
       next(err);
@@ -84,4 +80,4 @@ class ClientController {
   }
 }
 
-module.exports = new ClientController();
+module.exports = new StaffPermissionController();

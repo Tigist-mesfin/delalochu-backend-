@@ -1,6 +1,6 @@
-const repo = require("./staff.repository");
+const repo = require("./staffRole.repository");
 
-class StaffService {
+class StaffRoleService {
   async create(data) {
     return await repo.create(data);
   }
@@ -22,4 +22,4 @@ class StaffService {
   }
 }
 
-module.exports = new StaffService();
+module.exports = new StaffRoleService();

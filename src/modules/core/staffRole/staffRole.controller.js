@@ -1,14 +1,14 @@
-const service = require("./staff.service");
-const { createStaff, updateStaff } = require("./staff.validation");
+const service = require("./staffRole.service");
+const { createRole, updateRole } = require("./staffRole.validation");
 
-class StaffController {
+class StaffRoleController {
   async create(req, res, next) {
     try {
-      const { error } = createStaff.validate(req.body);
+      const { error } = createRole.validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
-      const staff = await service.create(req.body);
-      res.status(201).json(staff);
+      const role = await service.create(req.body);
+      res.status(201).json(role);
     } catch (err) {
       next(err);
     }
@@ -16,8 +16,8 @@ class StaffController {
 
   async getAll(req, res, next) {
     try {
-      const staff = await service.getAll();
-      res.json(staff);
+      const roles = await service.getAll();
+      res.json(roles);
     } catch (err) {
       next(err);
     }
@@ -25,8 +25,8 @@ class StaffController {
 
   async getById(req, res, next) {
     try {
-      const staff = await service.getById(req.params.id);
-      res.json(staff);
+      const role = await service.getById(req.params.id);
+      res.json(role);
     } catch (err) {
       next(err);
     }
@@ -34,7 +34,7 @@ class StaffController {
 
   async update(req, res, next) {
     try {
-      const { error } = updateStaff.validate(req.body);
+      const { error } = updateRole.validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
       await service.update(req.params.id, req.body);
@@ -54,4 +54,4 @@ class StaffController {
   }
 }
 
-module.exports = new StaffController();
+module.exports = new StaffRoleController();

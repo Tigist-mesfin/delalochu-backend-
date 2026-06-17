@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const controller = require("./client.controller");
+const controller = require("./staffPermission.controller");
 
 router.post("/", controller.create);
 

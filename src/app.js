@@ -26,7 +26,14 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 // API routes
-// app.use("/api/v1", modules);
+app.use("/api/users", modules.userRouter);
+app.use("/api/staff", modules.staffRouter);
+app.use("/api/staff-roles", modules.staffRoleRouter);
+app.use("/api/staff-permissions", modules.staffPermissionRouter);
+app.use("/api/clients", modules.clientRouter);
+app.use("/api/brokers", modules.brokerRouter);
+app.use("/api/broker-reviews", modules.brokerReviewRouter);
+
 
 // Health check
 app.get("/health", async (req, res) => {

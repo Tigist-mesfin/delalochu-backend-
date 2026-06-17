@@ -1,6 +1,6 @@
-const repository = require("./broker.repository");
+const repository = require("./brokerReview.repository");
 
-class BrokerService {
+class BrokerReviewService {
   async create(data) {
     return await repository.create(data);
   }
@@ -22,4 +22,4 @@ class BrokerService {
   }
 }
 
-module.exports = new BrokerService();
+module.exports = new BrokerReviewService();

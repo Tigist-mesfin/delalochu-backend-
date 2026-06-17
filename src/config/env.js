@@ -15,6 +15,8 @@ const env = {
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',
 
   // CORS
+  GEEZ_SMS_URL: process.env.GEEZ_SMS_URL,
+  GEEZ_SMS_TOKEN: process.env.GEEZ_SMS_TOKEN,
   ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS || '*',
 };
 
