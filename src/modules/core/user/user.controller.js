@@ -7,7 +7,14 @@ class UserController {
       const { error } = registerUser.validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
-      const user = await userService.register(req.body);
+   const data = {
+  ...req.body,
+  profile_image: req.file
+    ? `/uploads/profile-images/${req.file.filename}`
+    : null,
+};
+    
+      const user = await userService.register(data);
 
       res.status(201).json(user);
     } catch (err) {
@@ -78,9 +85,26 @@ class UserController {
   }
 
   async update(req, res) {
-    await userService.update(req.params.id, req.body);
-    res.json({ message: "Updated successfully" });
+  try {
+    const data = {
+      ...req.body,
+    };
+
+    if (req.file) {
+      data.profile_image = req.file.filename;
+    }
+
+    await userService.update(req.params.id, data);
+
+    return res.json({
+      message: "Updated successfully",
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: err.message,
+    });
   }
+}
 
   async delete(req, res) {
     await userService.delete(req.params.id);

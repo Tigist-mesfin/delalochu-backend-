@@ -6,6 +6,7 @@ const staffPermissionRouter = require("./core/staffPermission/staffPermission.ro
 const clientRouter = require("./core/client/client.router");
 const brokerRouter = require("./core/broker/broker.router");
 const brokerReviewRouter = require("./core/brokerReview/brokerReview.router");
+const authRouter = require("./core/auth/auth.router");
 
 module.exports = {
   userRouter,
@@ -15,4 +16,5 @@ module.exports = {
   clientRouter,
   brokerRouter,
   brokerReviewRouter,
+  authRouter,
 };

@@ -11,6 +11,13 @@ const errorHandler = require("./shared/middlewares/error.middleware");
 
 const app = express();
 
+const path = require("path");
+
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "uploads"))
+);
+
 app.use(express.json());
 
 // CORS
@@ -33,6 +40,7 @@ app.use("/api/staff-permissions", modules.staffPermissionRouter);
 app.use("/api/clients", modules.clientRouter);
 app.use("/api/brokers", modules.brokerRouter);
 app.use("/api/broker-reviews", modules.brokerReviewRouter);
+app.use("/api/auth", modules.authRouter);
 
 
 // Health check

@@ -1,36 +1,82 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+
+const uploadPath = path.join(process.cwd(), "uploads");
+
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // make sure folder exists
+    let folder = uploadPath;
+
+    if (file.fieldname === "profile_image") {
+      folder = path.join(uploadPath, "profile-images");
+    }
+
+    if (file.fieldname === "doc") {
+      folder = path.join(uploadPath, "broker-documents");
+    }
+
+    fs.mkdirSync(folder, { recursive: true });
+
+    cb(null, folder);
   },
 
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
-      file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
+      file.fieldname +
+        "-" +
+        Date.now() +
+        path.extname(file.originalname)
     );
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|webp/;
-  const ext = path.extname(file.originalname).toLowerCase();
-  const mimetype = allowedTypes.test(file.mimetype);
 
-  if (mimetype && allowedTypes.test(ext)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only images are allowed"), false);
+  if (file.fieldname === "profile_image") {
+
+    const allowed = /jpeg|jpg|png|webp/;
+
+    const ext = path.extname(file.originalname).toLowerCase();
+
+    if (
+      allowed.test(file.mimetype) &&
+      allowed.test(ext)
+    ) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Only images are allowed."));
   }
+
+  if (file.fieldname === "doc") {
+
+    const allowed = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+    ];
+
+    if (allowed.includes(file.mimetype)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Only PDF or image documents are allowed."));
+  }
+
+  cb(new Error("Invalid upload field."));
 };
 
-const upload = multer({
+module.exports = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
 });
-
-module.exports = upload;

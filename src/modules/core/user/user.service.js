@@ -18,11 +18,16 @@ class UserService {
 
   const hashed = await bcrypt.hash(data.password, 10);
 
-  const user = await userRepo.create({
-    ...data,
-    password_hash: hashed,
-    status: "PENDING",
-  });
+ const user = await userRepo.create({
+  first_name: data.first_name,
+  last_name: data.last_name,
+  phone: data.phone,
+  password_hash: hashed,
+  role: data.role,
+  profile_image: data.profile_image || null,
+  bio: data.bio || null,
+  status: "PENDING",
+});
 
   // ✅ OTP comes from GEEZ
   const otp = await smsService.sendOtp(user.phone);

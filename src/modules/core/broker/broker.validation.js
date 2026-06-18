@@ -12,7 +12,7 @@ const createBroker = Joi.object({
   woreda: Joi.string().required(),
   specific_area: Joi.string().required(),
 
-  doc: Joi.string().allow("", null),
+  doc: Joi.any().optional(),
 
   total_deals_closed: Joi.number().integer().default(0),
 
@@ -35,7 +35,7 @@ const updateBroker = Joi.object({
   woreda: Joi.string(),
   specific_area: Joi.string(),
 
-  doc: Joi.string().allow("", null),
+  doc: Joi.any().optional(),
 
   total_deals_closed: Joi.number().integer(),
 
