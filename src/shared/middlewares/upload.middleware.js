@@ -20,6 +20,11 @@ const storage = multer.diskStorage({
       folder = path.join(uploadPath, "broker-documents");
     }
 
+     // Listing Images
+    if (file.fieldname === "images") {
+      folder = path.join(uploadPath, "listing-images");
+    }
+
     fs.mkdirSync(folder, { recursive: true });
 
     cb(null, folder);
@@ -68,6 +73,22 @@ const fileFilter = (req, file, cb) => {
     }
 
     return cb(new Error("Only PDF or image documents are allowed."));
+  }
+
+   // Listing Images
+  if (file.fieldname === "listing_images") {
+    const allowed = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+
+    if (allowed.includes(file.mimetype)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Only image files are allowed."));
   }
 
   cb(new Error("Invalid upload field."));

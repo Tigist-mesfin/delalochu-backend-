@@ -7,6 +7,9 @@ const clientRouter = require("./core/client/client.router");
 const brokerRouter = require("./core/broker/broker.router");
 const brokerReviewRouter = require("./core/brokerReview/brokerReview.router");
 const authRouter = require("./core/auth/auth.router");
+const listingCategoryRouter = require("./commerce/listingCategory/listingCategory.route");
+const listingRouter = require("./commerce/listing/listing.router");
+
 
 module.exports = {
   userRouter,
@@ -17,4 +20,6 @@ module.exports = {
   brokerRouter,
   brokerReviewRouter,
   authRouter,
+  listingCategoryRouter,
+  listingRouter,
 };

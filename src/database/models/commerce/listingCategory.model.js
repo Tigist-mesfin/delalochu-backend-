@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     broker_commission_share: DataTypes.FLOAT,
     company_gain_share: DataTypes.FLOAT,
 
-    category_specific_feature_details: DataTypes.TEXT,
+  category_specific_feature_details: {
+  type: DataTypes.JSON,
+  allowNull: true,
+   },
   });
 
   ListingCategory.associate = (models) => {

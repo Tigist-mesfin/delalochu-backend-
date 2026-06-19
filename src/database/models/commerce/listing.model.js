@@ -14,9 +14,21 @@ module.exports = (sequelize, DataTypes) => {
     woreda: DataTypes.STRING,
     specific_location: DataTypes.STRING,
 
-    images_json: DataTypes.TEXT,
-    features_json: DataTypes.TEXT,
-    assigned_brokers_json: DataTypes.TEXT,
+     images: {
+      type: DataTypes.JSON,
+      allowNull: false,
+      defaultValue: [],
+    },
+     features: {
+      type: DataTypes.JSON,
+      allowNull: false,
+      defaultValue: {},
+    },
+     assigned_brokers: {
+      type: DataTypes.JSON,
+      allowNull: false,
+      defaultValue: [],
+    },
   });
 
   Listing.associate = (models) => {

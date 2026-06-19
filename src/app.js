@@ -34,13 +34,15 @@ app.use(morgan("dev"));
 
 // API routes
 app.use("/api/users", modules.userRouter);
+app.use("/api/auth", modules.authRouter);
 app.use("/api/staff", modules.staffRouter);
 app.use("/api/staff-roles", modules.staffRoleRouter);
 app.use("/api/staff-permissions", modules.staffPermissionRouter);
 app.use("/api/clients", modules.clientRouter);
 app.use("/api/brokers", modules.brokerRouter);
 app.use("/api/broker-reviews", modules.brokerReviewRouter);
-app.use("/api/auth", modules.authRouter);
+app.use("/api/listing-categories", modules.listingCategoryRouter);
+app.use("/api/listings", modules.listingRouter);
 
 
 // Health check
